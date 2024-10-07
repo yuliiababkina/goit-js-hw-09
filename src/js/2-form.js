@@ -1,17 +1,16 @@
 let formData = {};
 const form = document.querySelector('form');
-const localStorageKey = localStorage;
 
 //Отримуємо дані з input та додаємо їх до локального сховища
 form.addEventListener('input', event => {
   formData[event.target.name] = event.target.value.trim();
-  localStorageKey.setItem('feedback-form-state', JSON.stringify(formData));
+  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 });
 
 //Зчитуємо дані з локального сховища
 
-if (localStorageKey.getItem('feedback-form-state')) {
-  formData = JSON.parse(localStorageKey.getItem('feedback-form-state'));
+if (localStorage.getItem('feedback-form-state')) {
+  formData = JSON.parse(localStorage.getItem('feedback-form-state'));
 
   for (const key in formData) {
     form.elements[key].value = formData[key];
@@ -31,7 +30,7 @@ function handleSubmit(event) {
     event.preventDefault();
     console.log(formData);
     event.currentTarget.reset();
-    localStorageKey.clear();
+    localStorage.removeItem('feedback-form-state');
     formData = {};
   }
 }
